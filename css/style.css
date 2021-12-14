@@ -1,0 +1,47 @@
+.container {
+    background-color: lightyellow;
+    margin: 50px 50px 50px 50px;
+    padding: 50px 50px 50px 50px;
+    
+  }
+  .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .title {
+    font-family:'Ubuntu Mono', monospace;
+    font-size: 25px;
+    text-align: center;
+    color: lightcoral;
+  }
+  
+  
+  .userLabel {
+  font-family: 'Ubuntu Mono', monospace;
+  font-weight: 400;
+  border-left: lightseagreen 5px solid;
+  }
+  
+  .userInput {
+    width: 70px;
+    margin-left: 50px;
+    border-radius: 20px;
+    margin: 15px 10px 15px;
+  }
+  
+  .btn {
+    background-color: mediumaquamarine;
+    width: 40%;
+    text-align: center;
+  }
+  
+  .winner {
+    font-family: monospace;
+    border: lightsalmon 2px solid;
+    width: 40%;
+    margin-top: 40px;
+    background-color: white;
+  }
+  
