@@ -7,22 +7,27 @@ const winner = document.querySelector(".js-winner");
 const form = document.querySelector(".js-form");
 const nextNumber = document.querySelector(".js-nextNumber");
 const tries = document.querySelector(".js-tries");
+const playerScoreEl = document.querySelector(".js-playerScore");
+const computerScoreEl = document.querySelector(".js-computerScore");
+const resetBtn = document.querySelector(".js-resetBtn");
 
-// crear número random y número de intentos
+// variables globales
+let playerScore = 0;
+let computerScore = 0;
 const max = 9;
 let triesNumber = 10;
+
+// crear número random y número de intentos
 function getRandomNumber(max) {
   return Math.ceil(Math.random() * max);
 }
-let r = getRandomNumber(max);
-let computer =  Game();
 
 // condiciones piedra, papel o tijera
-function Game() {
-  if (r < 3) {
+function playGame(randomNumber) {
+  if (randomNumber < 3) {
     console.log("El ordenador escoge la piedra");
     return "piedra";
-  } else if (r <= 6) {
+  } else if (randomNumber <= 6) {
     console.log("El ordenador escoge el papel");
     return "papel";
   } else {
@@ -33,64 +38,82 @@ function Game() {
 
 // condiciones ganar, perder o empatar
 
-function checkNumber() {
+function checkWinner(computer) {
   const player = input.value;
-  
 
   if (player === "piedra") {
-    
-
-    if ( computer === "piedra") {
-      winner.innerHTML = "empate";
-    } else if ( computer === "tijera") {
-      winner.innerHTML = "has ganado";
-    } else if ( computer === "papel") {
-      winner.innerHTML = "has perdido";
+    if (computer === "piedra") {
+      draw();
+    } else if (computer === "tijera") {
+      playerWins();
+    } else if (computer === "papel") {
+      computerWins();
+    }
+  } else if (player === "tijera") {
+    if (computer === "piedra") {
+      computerWins();
+    } else if (computer === "tijera") {
+      draw();
+    } else if (computer === "papel") {
+      playerWins();
+    }
+  } else if (player === "papel") {
+    if (computer === "piedra") {
+      computerWins();
+    } else if (computer === "tijera") {
+      draw();
+    } else if (computer === "papel") {
+      playerWins();
     }
   }
-   
-    else if (player === "tijera") {
+}
 
-      if ( computer === "piedra") {
-        winner.innerHTML = "has perdido";
-      } else if ( computer === "tijera") {
-        winner.innerHTML = "empate";
-      } else if ( computer === "papel") {
-        winner.innerHTML = "has ganado";
-      }
-} 
+//Funciones de feedbakc painter
+function draw() {
+  winner.innerHTML = "empate";
+}
 
- else if (player === "papel") {
+function playerWins() {
+  winner.innerHTML = "has ganado";
+  playerScoreEl.innerHTML = `Jugadora: ${playerScore++}`;
+}
 
-      if ( computer === "piedra") {
-        winner.innerHTML = "has perdido";
-      } else if ( computer === "tijera") {
-        winner.innerHTML = "empate";
-      } else if ( computer === "papel") {
-        winner.innerHTML = "has ganado";
-      }
-    }
-  }
-
+function computerWins() {
+  winner.innerHTML = "has perdido";
+  computerScoreEl.innerHTML = `Ordenador: ${computerScore++}`;
+}
 
 //  eventos
 btn.addEventListener("click", handleClick);
 
+// función para resetear
+function resetGame(ev){
+  ev.preventDefault();
+  location.reload();
+}
+resetBtn.addEventListener('click', resetGame);
+
 // función que lo activa todo
 function handleClick(ev) {
-
   ev.preventDefault();
-
-  if (triesNumber > 0) {
-
-    triesNumber--;
-    tries.innerHTML = `Tienes ${triesNumber} intentos`;
-    checkNumber();
-    r = getRandomNumber(max);
-    computer =  Game();
-  }
-
-   else {
-    tries.innerHTML = "No te quedan más intentos";
+  if (input.value !== "Escoge") {
+    if (triesNumber > 1) {
+      triesNumber--;
+      tries.innerHTML = `Tienes ${triesNumber} intentos`;
+      let randomNumber = getRandomNumber(max);
+      let computer = playGame(randomNumber);
+      checkWinner(computer);
+    } else {
+      tries.innerHTML = "No te quedan más intentos";
+      if (computerScore>playerScore){
+        winner.innerHTML = "Ohh... has perdido";
+      } else if (playerScore>computerScore) {
+        winner.innerHTML = "¡Bieen! has ganado";
+      } else {
+        winner.innerHTML = "¡Habéis empatado!";
+      }
+      btn.classList.add("hidden");
+      resetBtn.classList.remove("hidden");
+    }
   }
 }

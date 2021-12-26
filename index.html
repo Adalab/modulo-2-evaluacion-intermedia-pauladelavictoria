@@ -26,16 +26,21 @@
           class="userInput js-userInput"
           id="userInput"
           >
-          <option value="piedra">Piedra</option>
-          <option value="papel">Papel</option>
-          <option value="tijera">Tijera</option>
+          <option value="Escoge" selected disabled>Escoge:</option>
+          <option value="piedra">🪨</option>
+          <option value="papel">📑</option>
+          <option value="tijera">✂️</option>
         </select>
         <input class="btn js-btn" type="submit" value="¡Juega!" />
+        <input type="submit" class="btn js-resetBtn hidden" value="Empieza de nuevo">
       </form>
 
       <p class="winner js-winner">¿Quién ganará?</p>
       <p class=" js-nextNumber"></p>
       <p class="tries js-tries">Tienes 10 intentos</p>
+
+      <p class="js-playerScore playerScore">Jugadora: </p>
+      <p class="js-computerScore computerScore">Ordenador: </p>
     </main>
 
     <script src="./js/main.js"></script>
